@@ -78,6 +78,7 @@ public class MapNotCollection {
 	 * 19 -> Collection<v>values() retorna uma collection com todos os valores do
 	 * map
 	 * 
+	 * Obs: Com hasMap, o java usa o hashCode() para determinar a ordem.
 	 * 
 	 */
 
