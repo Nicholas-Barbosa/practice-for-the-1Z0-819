@@ -43,14 +43,14 @@ public class QueueCollection {
 		queue.add("Nicholas");
 		queue.offer("Barbosa");
 
-		System.out.println(queue.element());
-		System.out.println(queue.peek());
+		System.out.println(queue.element());//Nicholas
+		System.out.println(queue.peek());//Nicholas
 
-		System.out.println(queue.poll());
-		System.out.println(queue.remove());
-		System.out.println(queue.poll());
+		System.out.println(queue.poll());//Nicholas
+		System.out.println(queue.remove());//Barbosa
+		System.out.println(queue.poll());//null
 
-		System.out.println(queue.peek());
+		System.out.println(queue.peek());//null
 		System.out.println(queue.element());// exception
 	}
 }

@@ -1,8 +1,8 @@
 package com.nicholas.ocp.sort;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class ComparableSort implements Comparable<ComparableSort> {
 	/*
@@ -61,19 +61,29 @@ public class ComparableSort implements Comparable<ComparableSort> {
 
 	@Override
 	public int compareTo(ComparableSort o) {
-		System.out.println("metodo compareTo current o " + nome + " param " + o.getNome());
-		return nome.compareTo(o.getNome());
+		System.out.println("current element " + o);
+		return nome.length() - o.getNome().length();
+	}
+
+	public ComparableSort() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public static void main(String[] args) {
 		ComparableSort comp1 = new ComparableSort("Nicholas");
 		ComparableSort comp2 = new ComparableSort("Barbosa");
-		// System.out.println(comp1.compareTo(comp2));
 		var lista = new ArrayList<ComparableSort>();
-		lista.add(comp1);
 		lista.add(comp2);
-		lista.add(new ComparableSort("Cestari"));
+		lista.add(comp1);
+
+		Comparator<ComparableSort> comparator = (s1, s2) -> s1.getNome().length() - s2.getNome().length();
 		Collections.sort(lista);
-		lista.forEach(System.out::println);
+		System.out.println("lista " + lista);
+		Collections.sort(lista, comparator);
+		System.out.println("lista depois do comparator" + lista);
+		System.out.println(comp1.compareTo(comp2));
+		Comparator.comparing(ComparableSort::getId);
+		Comparator.comparing((ComparableSort s1) -> s1.getId());
 	}
+
 }
