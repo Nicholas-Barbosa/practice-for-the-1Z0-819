@@ -80,25 +80,41 @@ public class MapNotCollection {
 	 * 
 	 * Obs: Com hasMap, o java usa o hashCode() para determinar a ordem.
 	 * 
+	 * no replaceAll-> BiFunction<parametroEaKey,parametroEOValue>
+	 * 
+	 * no merge-> BiFunction<parametroEoValorQueJaEstaNoMap,novoValor>
+	 * 
+	 * Caso o map tenha um valor null, a BiFunction nao e chamada para nao causar
+	 * NullPointer, sendo assim ele so adiciona o valor no map.
+	 * 
+	 * Se a BiFunction retornar null, o pair de key/value sera excluida.
 	 */
 
 	public static void main(String[] args) {
-		BiFunction<String, String, String> biFunction = (s1, s2) -> s1.length() > s2.length() ? "s1 e maior"
-				: "s2 e maior";
+		BiFunction<String, String, String> biFunction = (s1, s2) -> s1.length() > s2.length() ? s1 : s2;
 		Map<String, String> maps = new HashMap<>();
-		System.out.println(maps.put("N", "Nicholas"));// null
-		System.out.println(maps.put("N", "Barbosa"));
-		System.out.println(maps.remove("N"));
-		System.out.println(maps.remove("N"));
-		maps.put("N", "Barbosa");
-		System.out.println(maps.replace("N", "Nicholas"));// Barbosa
-		System.out.println(maps.replace("N2", "Nicholas"));// Null
-		maps.put("C", "Cestari");
-		maps.put("A", "Abelha");
+//		System.out.println(maps.put("N", "Nicholas"));// null
+//		System.out.println(maps.put("N", "Barbosa"));
+//		System.out.println(maps.remove("N"));
+//		System.out.println(maps.remove("N"));
+//		maps.put("N", "Barbosa");
+//		System.out.println(maps.replace("N", "Nicholas"));// Barbosa
+//		System.out.println(maps.replace("N2", "Nicholas"));// Null
+//		maps.put("C", "Cestari");
+//		maps.put("A", "Abelha");
+//		maps.forEach(MapNotCollection::itera);
+//		System.out.println(maps.merge("N", "barbosa", biFunction));
+//		maps.replaceAll((s1, s2) -> s2 + " kkkkk");
+//		maps.forEach(MapNotCollection::itera);
+//		/*
+//		 * Ou
+//		 */
+//		maps.entrySet().forEach(System.out::println);
+		maps.put("#12", "Nicholas");
+		maps.merge("#13", "Barbosa", biFunction);
+		maps.merge("#13", "Cestari", biFunction);
 		maps.forEach(MapNotCollection::itera);
-		System.out.println(maps.merge("N", "barbosa", biFunction));
-		maps.replaceAll(biFunction);
-		maps.forEach(MapNotCollection::itera);
+
 	}
 
 	private static void itera(String s1, String s2) {
