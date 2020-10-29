@@ -48,6 +48,8 @@ public class OCPGenerecis {
 	 * Sendo assim, o compilador introduz casts relevantes em seu codigo para que
 	 * funcione.
 	 * 
+	 * Como em classes, interfaces podem declarar um formal type parameter.
+	 * 
 	 */
 	public static void main(String[] args) {
 
