@@ -1,6 +1,8 @@
 package com.nicholas.ocp.collection;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -96,6 +98,18 @@ public class SetCollection {
 		setPerson.add(person);
 		setPerson.add(person2);
 		System.out.println(setPerson);
+		String[] arr = { "Nihcolas" };
+		List<String> lista = Arrays.asList(arr);
+
+		A a = new A();
+		SetCollection b = (SetCollection) a;
+		System.out.println(a == b);
 	}
 
+}
+
+class A extends SetCollection {
+}
+
+class B extends SetCollection {
 }

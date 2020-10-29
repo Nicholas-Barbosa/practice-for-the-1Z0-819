@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 
 public class ComparatorSort {
 
@@ -64,20 +65,28 @@ public class ComparatorSort {
 	public static void main(String[] args) {
 		Comparator<ComparatorSort> comparator = Comparator.comparingInt(ComparatorSort::getId)
 				.thenComparing(ComparatorSort::getNome);
+//		Function<ComparatorSort, String> function = s1 -> s1.getNome();
+//		Comparator<ComparatorSort> comparator2 = Comparator.comparingInt(ComparatorSort::getId)
+//				.thenComparing(function);
+
 		List<ComparatorSort> lista = new ArrayList<>(
 				List.of(new ComparatorSort(2, "Nicholas"), new ComparatorSort(2, "Barbosaaa")));
 		Collections.sort(lista, comparator);
 		lista.forEach(System.out::println);
+		ComparatorSort.testeFinc(ComparatorSort::getId);
 	}
 
 	private Integer id;
-
 	private String nome;
 
 	public ComparatorSort(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
+	}
+
+	private static String testeFinc(Function<ComparatorSort, Integer> fun) {
+		return null;
 	}
 
 	@Override
