@@ -1,6 +1,6 @@
 package com.nicholas.ocp.generics;
 
-public class MethodWithGenerics<T> {
+public class MethodWithGenerics<S> {
 
 	/*
 	 * Generics em nivel de metodos tambem e possivel.
@@ -32,6 +32,9 @@ public class MethodWithGenerics<T> {
 	 * 
 	 */
 
+	public static void main(String[] args) {
+		MethodWithGenerics.<String>as();
+	}
 	public <T> void a(T t) {
 
 	}
@@ -42,8 +45,9 @@ public class MethodWithGenerics<T> {
 
 	// Este formal type parameter e exclusivo do metodo, se vc tirar ele n vai pegar
 	// o da classe como num metodo de instancia
-	public static <T> T as(T t) {
-		return t;
+	public static <T> T as() {
+		T t1 = null;
+		return t1;
 	}
 
 }

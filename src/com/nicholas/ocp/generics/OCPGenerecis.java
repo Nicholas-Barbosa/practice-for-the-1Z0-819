@@ -1,5 +1,9 @@
 package com.nicholas.ocp.generics;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class OCPGenerecis {
 
 	/*
@@ -50,9 +54,52 @@ public class OCPGenerecis {
 	 * 
 	 * Como em classes, interfaces podem declarar um formal type parameter.
 	 * 
+	 * Cuidado com unbounded e lower bounded, removeIf por exemplo, so aceita
+	 * metodos de object, ja que o java tem certeza de que eles sao object
+	 * 
+	 * Com upper bounded, somente os metodos do pai sao aceitos, por exemplo ?
+	 * extends Object, somente os metodos de Object num removeIf seriam aceitos.
+	 * Pois qualquer elementos filho de object teriam acesso ao metodos dele.
+	 * 
+	 * Unbounded e upper bounded, como nao da para determinar o tipo da List por
+	 * exemplo, a lista se torna imutavel.
+	 * 
+	 * Cuidado ao adicionar elementos num lower bounded, pode ser que o elemento
+	 * seja incompativel e cause um erro de compilacao.
+	 * 
+	 * List<? super OCPGenerics> lista .....
+	 * 
+	 * lista.add(new Object()); -> erro de compilacao, se a lista fosse do tipo
+	 * OCPGenerics, objeto object nao poderia estar contido nessa collection.
+	 * 
+	 * Wildcards somente em parametros e variaveis. nao em classes
 	 */
-	public static void main(String[] args) {
+	private String nome;
 
+	public OCPGenerecis(String nome) {
+		super();
+		this.nome = nome;
+	}
+
+	public OCPGenerecis() {
+		super();
+	}
+
+	public static void main(String[] args) {
+		List<Double> dList = Arrays.asList(10.0, 12.0);
+		dList.forEach(x -> {
+			x = x + 10;
+		});
+		dList.forEach(x -> System.out.println(x));
+		List<OCPGenerecis> lista = new ArrayList<>();
+		java.util.function.Predicate<OCPGenerecis> pc = new OCPGenerecis()::isBlank;
+		// pc.test(new OCPGenerecis("nicholas"));
+		lista.add(new OCPGenerecis("Barbosas"));
+		lista.add(new OCPGenerecis("nicholas"));
+		lista.removeIf(pc);
+		System.out.println(lista);
+		List<? extends OCPGenerecis> listaLower = new ArrayList<>();
+		listaLower.removeIf(pc);
 		class Crat<T> {
 			private T variable;
 
@@ -80,4 +127,30 @@ public class OCPGenerecis {
 		 * erasure
 		 */
 	}
+
+	public boolean isBlank(OCPGenerecis s) {
+		if (s.nome.contains("n"))
+			return true;
+		return false;
+	}
+}
+
+class SonTeste extends OCPGenerecis {
+
+	public boolean isBlank() {
+		return true;
+	}
+}
+
+class W {
+}
+
+class X extends W {
+}
+
+class Y extends X {
+}
+
+class Z<s> {
+	W w3 = new Y();
 }

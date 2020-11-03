@@ -52,5 +52,7 @@ public class QueueCollection {
 
 		System.out.println(queue.peek());//null
 		System.out.println(queue.element());// exception
+		
+		
 	}
 }
