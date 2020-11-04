@@ -18,5 +18,6 @@ public class OCPPredicateEBi {
 
 		BiPredicate<String, String> bp = String::startsWith;
 		System.out.println(bp.test("nihoals", "n"));
+		
 	}
 }
