@@ -1,5 +1,11 @@
 package com.nicholas.ocp.streams;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Stream;
 
 public class StreamTerminalOperations {
@@ -41,6 +47,45 @@ public class StreamTerminalOperations {
 	 * iterate(seed,predicate,unary).Eles nao sao reductions pq eles nao olham todos
 	 * os elementos.
 	 * 
+	 * 5-reduce()
+	 * 
+	 * Transforma uma stream num unico objeto, como ele verifica todos os elementos
+	 * da stream, ele e reduction.
+	 * 
+	 * T reduce(T indentity,BinaryOperator<T> accumulater)
+	 * 
+	 * Optional<T>reduce(UnaryOperator<T> accumulator)
+	 * 
+	 * <U> U reduce(U identity,BiFunction<U,? super
+	 * T>accumulator,BinaryOperator<U>combiner)
+	 * 
+	 * 1-Se a stream estiver vazia, e retornada um optional empty.
+	 * 
+	 * 2-Se houver um elemento,este elemento e retornado.
+	 * 
+	 * 3-Caso haja varios elementos, o accumulator e chamado.
+	 * 
+	 * Accumulator -> Responsavel por pegar o current result e combinar com o
+	 * current value na stream.
+	 * 
+	 * Identity -> como seed em iterate(), valor inicial da reduction
+	 * 
+	 * 
+	 * 6-collect() *Entederemos melhor, quando vermos seus metodos da classe
+	 * Collectors, que abstrai o trabalho de ficar reimplementando o mesmo
+	 * collector.
+	 * 
+	 * <R>collect(Supplier<R> supplier, BiConsumer<R,? super
+	 * R>accumulator,BiConsumer<R,? super R>combiner>
+	 * 
+	 * Esta assinatura nos permite criar nosso proprio collect.
+	 * 
+	 * Caso especial de Reduction, ele e chamado de mutable Reduction. Mais
+	 * eficiente que os reductions regulares, pois usa o mesmo objeto(mutavel)
+	 * enquanto esta accumulating
+	 * 
+	 * Combiner -> Responsavel por pegar duas collections em mesclar.(Entendimento
+	 * melhor quando estivermos trabalhando com lambdas)
 	 */
 
 	public static void main(String[] args) {
@@ -76,5 +121,61 @@ public class StreamTerminalOperations {
 						 * Retorna true se nenhum elemento for avaliado como true no Predicate.como^
 						 */
 		System.out.println(noneMatches.noneMatch(x -> x == 10));
+
+		/*
+		 * reduction()
+		 * 
+		 */
+		System.out.println();
+
+		Stream<String> empty = Stream.empty();
+		System.out.println(empty.reduce((s1, s2) -> s1 + s2));
+
+		Stream<String> singleElement = Stream.of("ni");
+		System.out.println(singleElement.reduce((s1, s2) -> s1 + s2));
+
+		Stream<String> threeElements = Stream.of("henrique", "barbosa");
+		Optional<String> op = threeElements.reduce((s1, s2) -> s1 + s2);
+		System.out.println(op);
+		Stream<String> streamName = Stream.of("henrique", "barbosa");
+		String myName = streamName.reduce("nicholas", (x1, x2) -> x1 + " " + x2);
+		System.out.println(myName);
+		System.out.println();
+
+		Stream<String> streamNameLeng = Stream.of("henrique", "barbosa");
+		int myNameLeng = streamNameLeng.reduce(20, (x1, x2) -> x1 + x2.length(), (a, b) -> b + a);
+		System.out.println("leng " + myNameLeng);
+
+		/*
+		 * Collectors
+		 * 
+		 * Neste primeiro exemplo nosso mutable collector nao funcionou, pq String e
+		 * imutavel
+		 */
+		Stream<String> streamWithCollector = Stream.of("nicholas", "barbosa");
+		String r = streamWithCollector.collect(String::new, String::concat, String::concat);
+		System.out.println("r> " + r);
+		System.out.println();
+		Stream<StringBuilder> streamWithCollectorImutavel = Stream.of(new StringBuilder("nicholas"),
+				new StringBuilder("barbosa"));
+		StringBuilder imutavel = streamWithCollectorImutavel.collect(StringBuilder::new, StringBuilder::append,
+				StringBuilder::append);
+		System.out.println("r> " + imutavel);
+		System.out.println();
+
+		Stream<String> stream = Stream.of("n", "y", "A");
+
+		TreeSet<String> tree = stream.collect(TreeSet::new, TreeSet::add, TreeSet::addAll);
+		System.out.println(tree);
+		Stream<String> streamSet = Stream.of("n", "y", "A");
+
+		List<String> set = streamSet.collect(LinkedList::new, LinkedList::add, LinkedList::addAll);
+		System.out.println(set);
+		System.out.println();
+		Stream<String> streamTest = Stream.of("C", "B");
+
+		Set<String> reduce = new TreeSet<>(Set.of(streamTest.reduce("A", (x1, x2) -> x1 + " " + x2)));
+		System.out.println(reduce);
 	}
+
 }
