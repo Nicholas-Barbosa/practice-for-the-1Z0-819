@@ -176,6 +176,22 @@ public class StreamTerminalOperations {
 
 		Set<String> reduce = new TreeSet<>(Set.of(streamTest.reduce("A", (x1, x2) -> x1 + " " + x2)));
 		System.out.println(reduce);
-	}
 
+		Stream<String> streaSize = Stream.iterate("A", x -> x.length() <= 10, x -> x + x);
+		String allInOne = streaSize.reduce("S", (x, y) -> x + " " + y);
+		System.out.println(allInOne);
+		System.out.println();
+
+		Stream<StringBuilder> streaSizeCollect = Stream.iterate(new StringBuilder("A"), x -> x.length() <= 10,
+				x -> x.append(x));
+		StringBuilder allInOneCollect = streaSizeCollect.collect(() -> new StringBuilder(), (x, y) -> x.append(y + " "),
+				(x, y) -> y.append(x + "-"));
+		System.out.println(allInOneCollect);
+
+		System.out.println();
+
+		Stream<Integer> mulp = Stream.of(3, 5, 6);
+		int result = mulp.reduce(0, (x, y) -> x * y);
+		System.out.println(result);
+	}
 }
