@@ -70,6 +70,8 @@ public class StreamTerminalOperations {
 	 * 
 	 * Identity -> como seed em iterate(), valor inicial da reduction
 	 * 
+	 * combiner ->Responsavel por combinar qualquer total intermediario.
+	 * 
 	 * 
 	 * 6-collect() *Entederemos melhor, quando vermos seus metodos da classe
 	 * Collectors, que abstrai o trabalho de ficar reimplementando o mesmo
@@ -78,14 +80,18 @@ public class StreamTerminalOperations {
 	 * <R>collect(Supplier<R> supplier, BiConsumer<R,? super
 	 * R>accumulator,BiConsumer<R,? super R>combiner>
 	 * 
+	 * Combiner -> Pega dois containers(objetos,dada a circunstancia) e fundi seus
+	 * conteudos.
+	 *
+	 * accumulator -> incorpora um elemento stream em um container
+	 * 
 	 * Esta assinatura nos permite criar nosso proprio collect.
 	 * 
 	 * Caso especial de Reduction, ele e chamado de mutable Reduction. Mais
 	 * eficiente que os reductions regulares, pois usa o mesmo objeto(mutavel)
 	 * enquanto esta accumulating
 	 * 
-	 * Combiner -> Responsavel por pegar duas collections em mesclar.(Entendimento
-	 * melhor quando estivermos trabalhando com lambdas)
+	 * 
 	 */
 
 	public static void main(String[] args) {

@@ -1,7 +1,9 @@
 package com.nicholas.ocp.streams;
 
+import java.util.HashSet;
 import java.util.IntSummaryStatistics;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
