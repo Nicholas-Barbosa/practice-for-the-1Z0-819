@@ -21,7 +21,8 @@ public class OCPLocale {
 		System.out.println("----Locale com Builder pattern----");
 		System.out.println(new Locale.Builder().setRegion("EN").setLanguage("en").build());
 		System.out.println("----Default() setando o default()----");
-	
+		Locale l = new Locale.Builder().setRegion("pt").build();
+		System.out.println(l);
 		Locale.setDefault(Locale.US);
 		System.out.println(Locale.getDefault());
 	}
