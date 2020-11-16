@@ -25,6 +25,7 @@ public class OCPLocaleDefault {
 	public static void main(String[] args) {
 		double l= 90.9999;
 		Locale.setDefault(Locale.Category.FORMAT, Locale.CANADA);
+	
 		System.out.println(NumberFormat.getCurrencyInstance().format(l));
 	}
 }
