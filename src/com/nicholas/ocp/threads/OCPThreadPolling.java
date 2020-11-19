@@ -19,17 +19,28 @@ public class OCPThreadPolling {
 
 	public static void main(String[] args) throws InterruptedException {
 		System.out.println("Begin");
-		Runnable myRunnable = () -> {
-			for (int i = 0; i < 10; i++)
+
+		Runnable task1 = () -> {
+			for (int i = 0; i < 1000; i++) {
 				System.out.println("i " + i);
-			counter++;
+				counter++;
+			}
+
 		};
 
-		new Thread(myRunnable).start();
+		Runnable task2 = () -> {
+			for (int i = 0; i < 1000; i++) {
+				System.out.println("task2 " + i);
+				counter++;
+			}
+		};
+		new Thread(task1).start();
+
+		new Thread(task2).start();
 		/*
 		 * Pedimos a thread main dormir 1 segundo enquanto a thread separada roda;
 		 */
-		Thread.sleep(100);
+		Thread.sleep(1000);
 		System.out.println("Counter " + counter);
 	}
 }
