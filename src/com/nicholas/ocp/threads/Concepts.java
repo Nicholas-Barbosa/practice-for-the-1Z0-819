@@ -26,6 +26,12 @@ public class Concepts {
 	 * 
 	 * User defined thread -> Sao aquelas threads definidas pelo usuario.
 	 * 
+	 * Thread Concurrency
+	 * 
+	 * Thread concurrency e a propriedade de multiplas threads sendo executadas ao
+	 * mesmo tempo.
+	 * 
+	 * 
 	 * Pelo fato de houver varias threads, o sistema operaciona usa o thread
 	 * scheduler para determinar qual thread executar.
 	 * 
