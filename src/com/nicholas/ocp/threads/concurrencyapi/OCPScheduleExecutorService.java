@@ -39,7 +39,7 @@ public class OCPScheduleExecutorService {
 		executor.schedule(task, 1, TimeUnit.NANOSECONDS);
 		System.out.println();
 		executor.scheduleAtFixedRate(task, 0, 2, TimeUnit.SECONDS);
-		executor.scheduleWithFixedDelay(task, 0, 2, TimeUnit.SECONDS);
+		executor.scheduleWithFixedDelay(task, 0, 3, TimeUnit.SECONDS);
 
 	}
 }
