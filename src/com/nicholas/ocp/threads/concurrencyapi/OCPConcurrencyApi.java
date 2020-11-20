@@ -2,6 +2,8 @@ package com.nicholas.ocp.threads.concurrencyapi;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 public class OCPConcurrencyApi {
 
@@ -23,12 +25,14 @@ public class OCPConcurrencyApi {
 	 * sequencialmentes.
 	 */
 
-	public static void main(String[] args)  {
+	public static void main(String[] args) throws Exception {
 		/*
 		 * Quando criamos um thread executor, ele cria um no-deamon thread na primeira
 		 * task.
 		 * 
-		 * Deamon thread, sao threads que nao previnam do programa terminar.
+		 * Deamon thread, sao threads que nao irao prevenir da JVM sair quando o
+		 * programa terminar. Se todas as threads que estao rodando no teu programa,
+		 * forem deamon threads, seu programa ira terminar.
 		 * 
 		 * Se voce nao chamar o isShutDown(), seu programa ira correr pra sempre, ou ate
 		 * seu pc nao aguentar mais.
@@ -41,24 +45,68 @@ public class OCPConcurrencyApi {
 		 * Quando todos as tarefas forem executadas e terminadas, ambos serao true!
 		 * 
 		 * Se voce enviar uma nova task para a thread,quando isShutdown, sera lancado
-		 * RejectedExecutionException
+		 * RejectedExecutionException.
 		 * 
+		 * Enviando tasks. Metodos de ExecutorService para enviar tasks a thread.
+		 * 
+		 * 1-void execute(Runnable r) -> Executa task.
+		 * 
+		 * 2-Future<?>submit(Runnable r) -> Executa a runnable task e retorna um Future
+		 * como resultado
+		 * 
+		 * 3-<T>Future<T>(Callable<T< c) -> Executa a callble task e retorna um
+		 * Future<T>
+		 * 
+		 * 4-<T>List<Future<T>>invokeAll(Collection<? extends Callable>c) -> Executa as
+		 * tasks da collection, espera todas completarem e retorna uma List<Future<>> na
+		 * mesma ordem da original collection.
+		 * 
+		 * 5-><T>Future<T> invokeAny(Collection<? extends Callable>c) -> Executa todas
+		 * as threads da collection, espera pelo menos uma terminar, discarta as
+		 * restantes e retorna um Future.
+		 * 
+		 * Observe, o metodo execute() retorna um void ou seja null. Este metodo e
+		 * conhecido como "fire-and-forget", pelo fato de vc executar a task mas nao ter
+		 * nenhum retorno sobre ela.
+		 * 
+		 * Future Interface methodos.
+		 * 
+		 * 1-boolean isDone() -> Retorna true se as tasks foram completadas.
+		 * 
+		 * 2-boolean isCancelled() -> Retorna true se as tasks foram canceladas antes de
+		 * serem concluidas.
+		 * 
+		 * 3-boolean cancell(...) -> Tenta cancelar as tasks, retorna true se conseguir
+		 * ou false se nao conseguir ou as tasks ja foram concluidas.
+		 * 
+		 * 4-get() -> obtem o resultado da task mas espera por tempo inderteminado ate
+		 * que a mesma esteja concluida.
+		 * 
+		 * 5-get(TimeUnit t,long timedOut)-> Obtem o resultado da task, espera por tempo
+		 * especificado. Se o timedout for alacancado e a thread nao estiver pronta,
+		 * throws TimedOutException
 		 */
-		ExecutorService threadExecuter = Executors.newSingleThreadExecutor();
+		ExecutorService threadExecuter = null;
+		try {
+			threadExecuter = Executors.newSingleThreadExecutor();
 
-		
-		System.out.println("Begin");
+			System.out.println("Begin");
 
-		Runnable task1 = () -> {
-			for (int i = 0; i < 1000; i++)
-				System.out.println("task " + i);
-		};
-		threadExecuter.execute(task1);
-		
-		threadExecuter.execute(() -> System.out.println("executer2"));
-		System.out.println("End");
+			Runnable task1 = () -> {
+				for (int i = 0; i < 1000; i++)
+					System.out.println("task " + i);
+			};
+			Future<?> future = threadExecuter.submit(task1);
 
-		threadExecuter.shutdown();
+			threadExecuter.execute(() -> System.out.println("executer2"));
+			/*
+			 * Exception
+			 */
+			System.out.println("Task1 terminada " + future.get(1, TimeUnit.NANOSECONDS));
+			System.out.println("End");
 
+		} finally {
+			threadExecuter.shutdown();
+		}
 	}
 }
