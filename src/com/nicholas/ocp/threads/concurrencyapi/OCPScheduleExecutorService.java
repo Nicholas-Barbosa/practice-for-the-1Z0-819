@@ -31,15 +31,19 @@ public class OCPScheduleExecutorService {
 	 * Se uma task executar as 12pm e demorar 5 minutos e o delay entre execucoes
 	 * for de 2 minutos, ela ira executar de novo as 12:07pm
 	 * 
+	 * Observacao, executa tudo junto. A jvm nao espera executar uma task pra voltar no escopo da aplicacao como no ExecutorService
 	 */
 
 	public static void main(String[] args) {
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 		Runnable task = () -> System.out.println("Executing the task!");
+		Runnable task2 = () -> System.out.println("Executing the task2 fixedRate!");
+		Runnable task3 = () -> System.out.println("Executing the task3 dixedDelay!");
 		executor.schedule(task, 1, TimeUnit.NANOSECONDS);
-		System.out.println();
-		executor.scheduleAtFixedRate(task, 0, 2, TimeUnit.SECONDS);
-		executor.scheduleWithFixedDelay(task, 0, 3, TimeUnit.SECONDS);
+		
+		executor.scheduleAtFixedRate(task2, 0, 2, TimeUnit.SECONDS);
+		executor.scheduleWithFixedDelay(task3, 0, 3, TimeUnit.SECONDS);
+	
 
 	}
 }
