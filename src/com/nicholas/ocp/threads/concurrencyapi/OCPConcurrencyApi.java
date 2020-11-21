@@ -93,7 +93,7 @@ public class OCPConcurrencyApi {
 			System.out.println("Begin");
 
 			Runnable task1 = () -> {
-				for (int i = 0; i < 1000; i++)
+				for (int i = 0; i < 10; i++)
 					System.out.println("task " + i);
 			};
 			Future<?> future = threadExecuter.submit(task1);

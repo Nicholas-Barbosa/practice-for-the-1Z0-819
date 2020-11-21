@@ -1,5 +1,6 @@
 package com.nicholas.ocp.threads.concurrencyapi;
 
+import java.time.LocalTime;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -31,19 +32,42 @@ public class OCPScheduleExecutorService {
 	 * Se uma task executar as 12pm e demorar 5 minutos e o delay entre execucoes
 	 * for de 2 minutos, ela ira executar de novo as 12:07pm
 	 * 
-	 * Observacao, executa tudo junto. A jvm nao espera executar uma task pra voltar no escopo da aplicacao como no ExecutorService
+	 * Este mesmo exemplo com atFixedRate, comecaria as 12pm, executaria de novo as
+	 * 12:05, independente se a task anterior terminou ou nao.
+	 * 
+	 * Ou seja, fixedRate executa a task a cada periodo, certo. Enquanto
+	 * withFixedDelay executa com um delay entre o termino da ultima.
+	 * 
+	 * Observacao, executa tudo junto. A jvm nao espera executar uma task pra voltar
+	 * no escopo da aplicacao como no ExecutorService.
+	 * 
+	 * 
 	 */
 
 	public static void main(String[] args) {
+
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+		ScheduledExecutorService executor2 = Executors.newSingleThreadScheduledExecutor();
 		Runnable task = () -> System.out.println("Executing the task!");
-		Runnable task2 = () -> System.out.println("Executing the task2 fixedRate!");
-		Runnable task3 = () -> System.out.println("Executing the task3 dixedDelay!");
-		executor.schedule(task, 1, TimeUnit.NANOSECONDS);
-		
-		executor.scheduleAtFixedRate(task2, 0, 2, TimeUnit.SECONDS);
-		executor.scheduleWithFixedDelay(task3, 0, 3, TimeUnit.SECONDS);
-	
+		Runnable task2 = () -> {
+
+			System.out.println("Executing the task2 fixedRate!");
+
+		};
+
+		Runnable task3 = () -> {
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("Executing the task3 fixedDelay!");
+		};
+//		executor.schedule(task, 1, TimeUnit.MINUTES);
+//		executor.submit(() -> System.out.println("teste "));
+		executor.scheduleAtFixedRate(task2, 0, 1, TimeUnit.SECONDS);
+		executor2.scheduleWithFixedDelay(task3, 0, 1, TimeUnit.SECONDS);
 
 	}
 }
