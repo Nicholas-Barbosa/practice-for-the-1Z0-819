@@ -2,6 +2,7 @@ package com.nicholas.ocp.threads.concurrencyapi;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -51,7 +52,7 @@ public class OCPLockFramework {
 
 	public static void main(String[] args) {
 		ExecutorService executor = Executors.newFixedThreadPool(20);
-		Lock lock = new ReentrantLock();
+		Lock lock = new ReentrantLock(true);
 		try {
 
 			for (int i = 0; i < 10; i++) {
@@ -66,8 +67,11 @@ public class OCPLockFramework {
 	private static void increment(Lock lock) {
 
 		try {
-			lock.lock();
+			System.out.println(lock.tryLock(10, TimeUnit.SECONDS));
 			System.out.println("incrementing i " + (++i));
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			lock.unlock();
 

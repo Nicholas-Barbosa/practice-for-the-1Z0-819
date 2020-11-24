@@ -1,5 +1,8 @@
 package com.nicholas.ocp;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class TesteEasy implements X1 {
 
 	@Override
@@ -9,9 +12,9 @@ public class TesteEasy implements X1 {
 	}
 
 	public static void main(String[] args) {
-		X1 x1 = new TesteEasy();
-		x1.bater();
-		
+		Lock lock = new ReentrantLock();
+		lock.unlock();
+
 	}
 }
 
