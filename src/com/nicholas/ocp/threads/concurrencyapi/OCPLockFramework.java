@@ -51,7 +51,7 @@ public class OCPLockFramework {
 	private static int i = 0;
 
 	public static void main(String[] args) {
-		ExecutorService executor = Executors.newFixedThreadPool(20);
+		ExecutorService executor = Executors.newFixedThreadPool(10);
 		Lock lock = new ReentrantLock(true);
 		try {
 
@@ -67,12 +67,18 @@ public class OCPLockFramework {
 	private static void increment(Lock lock) {
 
 		try {
+			/*
+			 * Lock antes do codigo protegio
+			 */
 			System.out.println(lock.tryLock(10, TimeUnit.SECONDS));
 			System.out.println("incrementing i " + (++i));
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+			/*
+			 * unLock para liberar o lock a outra thread, depois do codigo protegido.
+			 */
 			lock.unlock();
 
 		}
