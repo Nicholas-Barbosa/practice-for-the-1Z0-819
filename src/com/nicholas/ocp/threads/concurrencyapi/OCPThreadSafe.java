@@ -54,6 +54,7 @@ public class OCPThreadSafe {
 
 	public void incrementAndReport() {
 		++sheepCount;
+		
 	}
 
 	public static void main(String[] args) {
@@ -67,9 +68,10 @@ public class OCPThreadSafe {
 			OCPThreadSafe tSafe = new OCPThreadSafe();
 			IntStream.range(0, 1000).forEach(x -> executers.submit(tSafe::incrementAndReport));
 			IntStream.range(0, 1000).forEach(x -> executers.submit(count::incrementAndGet));
+			executers.submit(() -> System.out.println("oie"));
 			System.out.println("with atomic " + count.get());
 			System.out.println("no atomic " + tSafe.sheepCount);
-
+			System.out.println("END");
 			/*
 			 * No atomic, as threads estao lendo sem esperar a outra thread escrever. Estao
 			 * passando por cima uma da outra, overwriting o resultado.
