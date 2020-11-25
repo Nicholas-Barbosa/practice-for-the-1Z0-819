@@ -42,11 +42,13 @@ public class OCPCyclicBarrier {
 
 	private static void executaTasks(CyclicBarrier c1) {
 		try {
+
 			removeLeao();
 			c1.await();
 			limpaGaiola();
 			c1.await();
 			adicionaLeao();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -56,7 +58,8 @@ public class OCPCyclicBarrier {
 		ExecutorService exe = null;
 		try {
 			exe = Executors.newFixedThreadPool(4);
-			CyclicBarrier c = new CyclicBarrier(4);
+			CyclicBarrier c = new CyclicBarrier(4, () -> System.out.println(
+					"Todas as threads chamaram o await, agora o barrier sera liberado para outro grupo de threads."));
 			for (int i = 0; i < 4; i++) {
 				exe.submit(() -> OCPCyclicBarrier.executaTasks(c));
 			}

@@ -45,6 +45,7 @@ public class OCPOptional {
 	}
 
 	public static Optional<String> ops() {
+	
 		return Optional.of("Nicholas");
 	}
 
