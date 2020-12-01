@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
 
 public class OCPCollectorParallel {
@@ -53,6 +54,5 @@ public class OCPCollectorParallel {
 						Collectors.toList()));
 		System.out.println(map2);
 		System.out.println(map2.getClass());
-
 	}
 }

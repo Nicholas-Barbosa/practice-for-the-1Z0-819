@@ -1,6 +1,5 @@
 package com.nicholas.ocp.threads.concurrencyapi;
 
-import java.time.LocalTime;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -48,7 +47,6 @@ public class OCPScheduleExecutorService {
 
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 		ScheduledExecutorService executor2 = Executors.newSingleThreadScheduledExecutor();
-		Runnable task = () -> System.out.println("Executing the task!");
 		Runnable task2 = () -> {
 
 			System.out.println("Executing the task2 fixedRate!");

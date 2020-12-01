@@ -1,12 +1,9 @@
 package com.nicholas.ocp.streams.parallel;
 
 import java.util.List;
-import java.util.Set;
-import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Stream;
 
 public class OCPCollectParallel {
@@ -25,7 +22,8 @@ public class OCPCollectParallel {
 
 	public static void main(String[] args) {
 		/*
-		 * Usar cocncurrent collection para combinar resultados, garantir que os resultados da outras threads, nao lancem ConcurrentModificationExcpetion
+		 * Usar cocncurrent collection para combinar resultados, garantir que os
+		 * resultados da outras threads, nao lancem ConcurrentModificationExcpetion
 		 */
 		Stream<Integer> stream = Stream.of(4, 2, 1, 9, 3).parallel();
 		SortedSet<Integer> set = stream.collect(ConcurrentSkipListSet::new, SortedSet::add, SortedSet::addAll);
