@@ -40,7 +40,11 @@ public class OCPCharacterStreams {
 
 			while ((i = reader.read(buffer)) != -1) {
 				writer.write(buffer, 0, i);
-
+				writer.flush();
+				/*
+				 * Flush solicita que todos os dados cacheados em memorias, sejam imediatamente
+				 * gravados no file system
+				 */
 			}
 
 			/*
