@@ -37,11 +37,10 @@ public class OCPByteStreamWriterReader {
 				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(dest))) {
 
 			while (in.read(buffer) != -1) {
-				
+
 				out.write(buffer);
 
 			}
-			System.out.println(buffer[1]);
 
 		}
 		/*
