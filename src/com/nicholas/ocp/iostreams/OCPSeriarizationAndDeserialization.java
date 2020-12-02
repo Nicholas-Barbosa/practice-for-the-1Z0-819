@@ -21,8 +21,8 @@ public class OCPSeriarizationAndDeserialization {
 	 */
 
 	public static void main(String[] args) {
-		serializeGorila();
-		System.out.println("Depois da desserializacao: " + deserialGorila());
+		// serializeGorila();
+		System.out.println("Desserializacao: " + deserialGorila());
 	}
 
 	private static void serializeGorila() {
@@ -39,6 +39,12 @@ public class OCPSeriarizationAndDeserialization {
 	}
 
 	private static Gorila deserialGorila() {
+		/*
+		 * Quando voce desserializa um objeto, o construtor da classe serializada junto
+		 * com os inicializadores de instancias nao sao chamados quando o objeto e
+		 * criado. Java ira chamar o construtor sem argumentos da classe pai nao
+		 * serializada
+		 */
 		try (ObjectInputStream deser = new ObjectInputStream(new BufferedInputStream(
 				new FileInputStream("C:\\Users\\Nicholas Henrique\\Documents\\IO streams\\gorilaSerial")))) {
 			return (Gorila) deser.readObject();
@@ -48,7 +54,7 @@ public class OCPSeriarizationAndDeserialization {
 		}
 	}
 
-	static class Gorila implements Serializable {
+	static class Gorila extends GorilaParent implements Serializable {
 		/**
 		 * 
 		 */
@@ -62,8 +68,13 @@ public class OCPSeriarizationAndDeserialization {
 
 		public Gorila(Integer age, String name) {
 			super();
+			System.out.println("Nao sera chamado na desserializacao");
 			this.age = age;
 			this.name = name;
+		}
+
+		{
+			System.out.println("Nem aqui");
 		}
 
 		public Integer getAge() {
@@ -80,8 +91,15 @@ public class OCPSeriarizationAndDeserialization {
 
 		@Override
 		public String toString() {
-			return "Gorila [age=" + age + ", name=" + name + "]";
+			return "Gorila [age=" + age + ", name=" + name + ", birthday=" + birthday + "]";
 		}
 
+	}
+
+	static class GorilaParent {
+
+		public GorilaParent() {
+			System.out.println("Construtor da classe pai");
+		}
 	}
 }
