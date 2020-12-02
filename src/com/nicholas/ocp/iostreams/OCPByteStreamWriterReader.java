@@ -12,18 +12,21 @@ public class OCPByteStreamWriterReader {
 	/*
 	 * read() -> Le um byte por vez.
 	 * 
-	 * read(byte[]b) -> Le os valores dentro do buffer(array), retorna o numero
-	 * maximo de bytes lidos.
+	 * read(byte[]b) -> Le uma certa quantidade de bytes de uma input stream, os
+	 * adiciona no array b, retorna o numero de bytes lidos no array.
 	 * 
-	 * read(byte[b],int offset,int lenght) -> Le os valores dentro do buffer ate o
-	 * length , comecando com a posicao offset.Retorna o nmumero de bytes lidos
+	 * read(byte[]b,int offset,int lenght) -> Le os bytes de uma input stream em um
+	 * array de bytes, ate o limite length. Armazena os bytes no array b, tomando
+	 * como posiciao inicial o offset bytes lidos no array b comecando na posicao
+	 * offeset
 	 * 
 	 * write(int i) -> grava um unico byte
 	 * 
-	 * write(byte[]b) -> grava um array de valores dentro da stream
+	 * write(byte[]b) -> grava o array de valores dentro da stream
 	 * 
-	 * write(bythe[]b,int offset,int lenght) ->> grava um array comecando na posicao
-	 * offset, limitando com length numa stream
+	 * write(bythe[]b,int offset,int lenght) ->> grava o array comecando na posicao
+	 * offset, usando o parametro lentght como limitador de bytes.
+	 * 
 	 * 
 	 */
 
