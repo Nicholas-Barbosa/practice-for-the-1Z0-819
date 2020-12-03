@@ -14,7 +14,11 @@ public class OCPSystemIn {
 		 * InputStream wrap um InputStream e convrte pra Reader
 		 */
 		try (var out = new BufferedReader(new InputStreamReader(System.in))) {
-			System.out.format("Ur message: %s", out.readLine());
+			String line = out.readLine();
+			System.out.format("Ur message: %s", line);
+			int bits = out.read();
+			char letter = (char) bits;
+			System.out.println( letter + " in bits " + bits);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
