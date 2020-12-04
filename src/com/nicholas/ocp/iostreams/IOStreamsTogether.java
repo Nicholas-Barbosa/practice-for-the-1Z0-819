@@ -30,8 +30,8 @@ public class IOStreamsTogether {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			executor.shutdown();
 		}
-		executor.shutdown();
 
 	}
 
@@ -70,7 +70,6 @@ public class IOStreamsTogether {
 			Nicholas nicholas = new Nicholas("Nicholas", "83025330", 16, "Brazil");
 			ser.writeObject(nicholas);
 			ser.flush();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
