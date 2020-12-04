@@ -3,6 +3,8 @@ package com.nicholas.ocp.nio2;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -31,5 +33,22 @@ public class OCPObtainPah {
 
 		File fromPathToFile = fromFile.toFile();
 		System.out.println(fromPathToFile);
+
+		/*
+		 * Path.of() e Paths.get() sao atalhos para FileSystem.getPath()
+		 */
+		FileSystem fS = FileSystems.getDefault();
+		Path fromFileSystem = fS.getPath("");
+		System.out.println(fromFileSystem);
+		/*
+		 * Path Symbols e uma seria de caracteres reservados, que possuem significados
+		 * no file system.
+		 * 
+		 * . -> refere-se ao current directory
+		 * 
+		 * ..-> refere-se ao diretorio pai.
+		 * 
+		 */
+
 	}
 }
