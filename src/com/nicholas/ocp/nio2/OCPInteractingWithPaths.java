@@ -78,7 +78,8 @@ public class OCPInteractingWithPaths {
 	 * working directory com o Path. Se for relative retorna o proprio objeto.
 	 * 
 	 * 10-resolve() -> Concatena dois Path. O objeto que esta chamando este metodo
-	 * servira como base para um novo Path, com o argumento de entrada anexado.
+	 * servira como base para um novo Path, com o argumento de entrada anexado. Se
+	 * os dois forem absoluePath, ele ira retornar o argumento.
 	 * 
 	 * 11-revitalize() -> Cria um relative path com path symbols de um Path para
 	 * outro. A idei e, quantos steps eu preciso pegar para ir de um Path a outro.
@@ -110,7 +111,7 @@ public class OCPInteractingWithPaths {
 		 * toAbsolute junta System.getProperty("user.dir") com o Path
 		 */
 		System.out.println("toAbsolute" + Path.of("nicholas", "barbosa").toAbsolutePath());
-		System.out.println("resolve " + path.resolve(Path.of("../nicholas", "barbosa")));
+		System.out.println("resolve " + path.resolve(Path.of("/nicholas", "barbosa")));
 
 		Path path1 = Path.of("nicholas", "name.txt");
 		Path path2 = Path.of("age", "age.txt");
@@ -124,5 +125,14 @@ public class OCPInteractingWithPaths {
 		Path pathNormalize = Path.of("file/bla/../realPath.txt");
 		System.out.println(pathNormalize.normalize());
 		System.out.println(pathNormalize.toRealPath(LinkOption.NOFOLLOW_LINKS));
+
+		/*
+		 * IOException, no relativize() com absolue path no windows, as letras de discos
+		 * devem ser iguais
+		 * 
+		 * Path pathExecp = Path.of("c:/nicholas"); System.out.println("relativze: " +
+		 * Path.of("d:/barbosa").relativize(pathExecp)); }
+		 */
+
 	}
 }
