@@ -39,11 +39,14 @@ public class OCPByteStreamWriterReader {
 		try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
 				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(dest))) {
 
-			while (in.read(buffer) != -1) {
-
-				out.write(buffer);
-
+			int i = 0;
+			int bytes;
+			while ((bytes = in.read()) != -1) {
+				buffer[i] = (byte) bytes;
+				i++;
 			}
+			out.write(buffer);
+			out.flush();
 
 		}
 		/*
