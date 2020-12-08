@@ -65,7 +65,7 @@ public class OCPFiles {
 	 * exists() e o unico metodo de Files que nao declara uma checked excpetion!
 	 */
 
-	private static final Path pathToWork = Path.of("C:\\Users\\Nicholas Henrique").resolve("Documents\\nio.2");
+	protected static final Path pathToWork = Path.of("C:\\Users\\Nicholas Henrique").resolve("Documents\\nio.2");
 
 	public static void main(String[] args) throws IOException {
 		System.out.println("Path exists: " + exists());
@@ -121,6 +121,7 @@ public class OCPFiles {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				int i = 0;
+
 				while (i <= 100) {
 					writer.write(line + " log number #" + (i++));
 					writer.newLine();
