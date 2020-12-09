@@ -36,7 +36,8 @@ public class OCPFilesList {
 
 	private static String copyAllFiles(Path currentPath) {
 		/*
-		 * Inves de deep copy como move() a copy() fazem, realizamos uma deep copy.
+		 * Inves de deep copy como move() a copy() fazem, realizamos uma deep copy. 
+		 * Exceto por nao estarmos movendo um diretorio mas so arquivos.
 		 */
 		if (Files.isRegularFile(currentPath)) {
 			try {
