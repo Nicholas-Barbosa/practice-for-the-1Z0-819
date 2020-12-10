@@ -108,11 +108,15 @@ public class OCPNio2Together {
 		}
 	}
 
-	private static void isSameFile()throws IOException {
+	private static void isSameFile() throws IOException {
+		/*
+		 * toRealPath(), alem de chamar o toAbsolutePath() tambem chama o normalize(). O
+		 * reviatalize() como isSameFile() tambem chamam o normalize()
+		 */
 		Path pathOne = pathFolder.resolve("readOrigem.txt");
 		Path pathTwo = pathFolder.resolve("nio2/../readOrigem.txt");
 		System.out.println(Files.isSameFile(pathOne, pathTwo));
 		System.out.println(Files.isHidden(pathTwo));
-		
+		System.out.println(pathOne.relativize(pathTwo));
 	}
 }
