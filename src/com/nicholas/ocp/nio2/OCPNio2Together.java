@@ -1,6 +1,7 @@
 package com.nicholas.ocp.nio2;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -82,6 +83,8 @@ public class OCPNio2Together {
 	 * 22-BasicFileAttributes readAttributes
 	 * 
 	 * 23-FileAttributesView getFileAttributesView
+	 * 
+	 * 24-list
 	 */
 	private static final Path pathFolder = Path.of("C:\\Users\\Nicholas Henrique\\Documents\\nio.2");
 
@@ -118,5 +121,11 @@ public class OCPNio2Together {
 		System.out.println(Files.isSameFile(pathOne, pathTwo));
 		System.out.println(Files.isHidden(pathTwo));
 		System.out.println(pathOne.relativize(pathTwo));
+
+	}
+
+	public void usePrintWriter(PrintWriter pw) {
+		boolean bval = true;
+		pw.write("");
 	}
 }
