@@ -73,7 +73,7 @@ public class Review {
 		var one = List.of("Nicholas");
 		var two = List.of("Barbosa");
 		Stream<List<String>> st = Stream.of(one, two);
-		Stream<String> newSt = st.flatMap(w -> w.stream());
+		Stream<String> newSt = st.flatMap(w ->w.stream());
 		newSt.forEach(System.out::println);
 
 		Stream<Stream<?>> streamWitMap = Stream.of(one, two).map(x -> x.stream());
@@ -81,9 +81,9 @@ public class Review {
 		/*
 		 * flatMap()
 		 * 
-		 * Retorna uma stream consistindo nos resultados de substituir cada elemento
-		 * desta stream com o conteudo da stream produzida por aplicar a function para
-		 * cada elemento
+		 * Retorna uma Stream consistindo nos resultados de substituir cada elementos
+		 * desta stream com os conteudos da stream produzida por aplicar a function
+		 * fornecida para cada elemento.
 		 * 
 		 * Achata, nivela todos os elementos num mesmo nivel na stream.
 		 * 
