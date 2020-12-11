@@ -79,7 +79,7 @@ public class Review {
 		Stream<Stream<?>> streamWitMap = Stream.of(one, two).map(x -> x.stream());
 		streamWitMap.forEach((x) -> System.out.println(x.findFirst().get()));
 		/*
-		 * flatMap()
+		 * flatMap() 
 		 * 
 		 * Retorna uma Stream consistindo nos resultados de substituir cada elementos
 		 * desta stream com os conteudos da stream produzida por aplicar a function
