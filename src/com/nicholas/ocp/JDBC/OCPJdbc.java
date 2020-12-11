@@ -2,7 +2,10 @@ package com.nicholas.ocp.JDBC;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import com.mysql.cj.xdevapi.PreparableStatement;
 
 public class OCPJdbc {
 
@@ -45,6 +48,8 @@ public class OCPJdbc {
 	 * 
 	 * ResulSet -> Le o response de uma query
 	 * 
+	 * 
+	 * 
 	 */
 
 	public static void main(String[] args) throws SQLException {
@@ -54,9 +59,9 @@ public class OCPJdbc {
 		 * exception
 		 */
 		try (Connection connection = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/nicholas_spring?useTimezone=true&serverTimezone=UTC", "root",
-				"***")) {
+				"jdbc:mysql://localhost:3306/nicholas_spring?useTimezone=true&serverTimezone=UTC", "root", "**")) {
 			System.out.println("Connection " + connection);
+			getPreparedStatement(connection);
 		}
 
 		/*
@@ -64,5 +69,39 @@ public class OCPJdbc {
 		 * do seu database. Neste caso e mysql. As vezes as classes de implementacoes da
 		 * key interfaces, sao nem public.
 		 */
+	}
+
+	private static void getPreparedStatement(Connection con) throws SQLException {
+		/*
+		 * PreparedStatement, CallableStatement sao sub interfaces de Statement.
+		 * 
+		 * PreparedStatement e Statement sao similares, exceto que PreparedStamenet pega
+		 * um parametro e Statament nao.
+		 * 
+		 * Embora Statement execute SQL query, voce deve usar PreparedStatament pelas
+		 * seguintes razoes.
+		 * 
+		 * Perforance: Muitas vezes nos executamos as mesmas consultas varias vezes. O
+		 * prepared statement descobre um plano para executar bem esses sql e se lembra
+		 * deles. Cacheia os comandos.
+		 * 
+		 * Security: Usando prepared statement, vc se protege de ataques SQLs conhecidos
+		 * como sql injection.
+		 * 
+		 * Readable: Nao e preciso concatenar Strings ao construir uma consulta com
+		 * muitos parametros.
+		 * 
+		 * Future use: Mesmo que sua query executa apenas uma vez ou nao tenha
+		 * parametros, voce deve usar PreparedStatement. Futuros editores do codigo nao
+		 * irao adicionar uma variavel e terao de se lembra de usar o prepared stament
+		 */
+
+		try (PreparedStatement ps = con.prepareStatement("SELECT * FROM tabele")) {
+			System.out.println("Ps " + ps);
+			/*
+			 * PreparedStament representa o SQL, entao voce deve passar um parametro sql a
+			 * ele! Nao executamos a query ainda...
+			 */
+		}
 	}
 }
