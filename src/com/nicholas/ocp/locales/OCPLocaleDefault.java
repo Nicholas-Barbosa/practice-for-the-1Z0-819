@@ -1,7 +1,11 @@
 package com.nicholas.ocp.locales;
 
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Locale;
+import java.util.Locale.Category;
 
 public class OCPLocaleDefault {
 	/*
@@ -23,9 +27,15 @@ public class OCPLocaleDefault {
 	 */
 
 	public static void main(String[] args) {
-		double l= 90.9999;
-		Locale.setDefault(Locale.Category.FORMAT, Locale.CANADA);
-	
+		double l = 90.9999;
+
+		LocalDate local = LocalDate.now();
+
+		System.out.println(local.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)
+				.withLocale(new Locale.Builder().setLanguage("en").build())));
+
+		Locale.setDefault(Category.FORMAT,Locale.GERMANY);
 		System.out.println(NumberFormat.getCurrencyInstance().format(l));
+
 	}
 }
