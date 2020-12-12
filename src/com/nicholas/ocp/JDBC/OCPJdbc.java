@@ -3,9 +3,8 @@ package com.nicholas.ocp.JDBC;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import com.mysql.cj.xdevapi.PreparableStatement;
 
 public class OCPJdbc {
 
@@ -59,9 +58,12 @@ public class OCPJdbc {
 		 * exception
 		 */
 		try (Connection connection = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/nicholas_spring?useTimezone=true&serverTimezone=UTC", "root", "**")) {
+				"jdbc:mysql://localhost:3306/1z0_819_jdbc?useTimezone=true&serverTimezone=UTC", "root",
+				"Vicinitech12")) {
 			System.out.println("Connection " + connection);
 			getPreparedStatement(connection);
+			executeQuery(connection);
+			execute(connection);
 		}
 
 		/*
@@ -94,14 +96,65 @@ public class OCPJdbc {
 		 * Future use: Mesmo que sua query executa apenas uma vez ou nao tenha
 		 * parametros, voce deve usar PreparedStatement. Futuros editores do codigo nao
 		 * irao adicionar uma variavel e terao de se lembra de usar o prepared stament
+		 * 
+		 * metodos de prepared statements para executar instrucoes.
+		 * 
+		 * int executeUpdate(); -> Instrucoes que mudam dados na tabela, como
+		 * INSERT,DELETE,UPDATE usam este metodo.
+		 * 
+		 * ResultSet executeQuery() -> Pelo proprio nome, executa selects.
+		 * 
+		 * boolean execute() -> Executa tanto selects tanto metodos que mudam dados.
+		 * Retorna true se for um result set ou false se nao for.
+		 * 
+		 * bind variable e um place holder ou marcados, que nos permite fornecer os
+		 * valores reais em tempo de execucao.Como se fosse uma lista de parametros, na
+		 * qual voce deve setalos.
 		 */
 
-		try (PreparedStatement ps = con.prepareStatement("SELECT * FROM tabele")) {
-			System.out.println("Ps " + ps);
+		try (PreparedStatement ps = con.prepareStatement("REPLACE INTO USER VALUES(?,?,?)")) {
 			/*
-			 * PreparedStament representa o SQL, entao voce deve passar um parametro sql a
-			 * ele! Nao executamos a query ainda...
+			 * Observe, neste caso os indexs contam apartir de 1!
 			 */
+			ps.setInt(1, 1);
+			ps.setString(2, "Nicholas");
+			ps.setString(3, "Barbosa");
+
+			int rows = ps.executeUpdate();
+			System.out.println("Linhas modificadas: " + rows);
+
+			ps.setInt(1, 2);
+			ps.setString(2, "Cestari");
+
+			rows = ps.executeUpdate();
+			System.out.println("Linhas modificadas: " + rows);
+
+			/*
+			 * Primeira vantagem do PreparedStatement, neste caso o prepared statement
+			 * descobriu um plano para executar o insert e se lembrou dele. Ele meio que
+			 * cacheou os parametros ja passados pro bind variable.
+			 */
+		}
+	}
+
+	private static void executeQuery(Connection con) throws SQLException {
+		var sql = "SELECT * FROM user";
+		try (var ps = con.prepareStatement(sql)) {
+			ps.executeQuery();
+		}
+	}
+
+	private static void execute(Connection con) throws SQLException {
+		var sql = "UPDATE user SET last_name=? where id=?";
+		try (var ps = con.prepareStatement(sql)) {
+			ps.setString(1, "Pastri");
+			ps.setInt(2, 2);
+			boolean isResultSet = ps.execute();
+			if (isResultSet) {
+				ps.getResultSet();
+			} else {
+				System.out.println("linhas modificadas: " + ps.getUpdateCount());
+			}
 		}
 	}
 }
