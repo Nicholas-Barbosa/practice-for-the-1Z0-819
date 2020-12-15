@@ -140,7 +140,8 @@ public class OCPJdbc {
 	private static void executeQuery(Connection con) throws SQLException {
 		var sql = "SELECT * FROM user";
 		try (var ps = con.prepareStatement(sql)) {
-			ps.executeQuery();
+			var response = ps.executeQuery();
+			resultSet(response);
 		}
 	}
 
@@ -156,5 +157,26 @@ public class OCPJdbc {
 				System.out.println("linhas modificadas: " + ps.getUpdateCount());
 			}
 		}
+	}
+
+	private static void resultSet(ResultSet rs) throws SQLException {
+		/*
+		 * Com o result set, obtido de uma preparedStatement com um executeQuery() por
+		 * exemplo, conseguimos acessar dados de uam determinada row, buscando pelo
+		 * index(comecando com 1) ou o nome da coluna.
+		 * 
+		 * ResultSet possui um cursor que aponta para a localizacao atual no dado.
+		 * 
+		 */
+		while (rs.next()) {
+			System.out.println("ID: " + rs.getInt(1));
+			System.out.println("Name: " + rs.getString("name"));
+			System.out.println("Last name: " + rs.getString("last_name"));
+		}
+		/*
+		 * Boa pratica verificar se ha elementos disponiveis no ponteiro, se nao houver
+		 * o next() ira retornar false. Caso chame um dos metodos getter num ponteiro
+		 * sem elementos ou num index ou coluna inexistente, vc ira receber SQLException
+		 */
 	}
 }
