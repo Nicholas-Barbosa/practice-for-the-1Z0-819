@@ -14,13 +14,13 @@ public class OCPSqlInjection {
 	 * bind variables.
 	 */
 
-	private static final Properties properitesData;
-	private static final String jdbcUrl = "jdbc:mysql://localhost:3306/1z0_819_jdbc?useTimezone=true&serverTimezone=UTC";
+	private static final Properties PROPERTIES_DATA;
+	private static final String JDBC_URL = "jdbc:mysql://localhost:3306/1z0_819_jdbc?useTimezone=true&serverTimezone=UTC";
 
 	static {
-		properitesData = new Properties();
-		properitesData.put("user", "root");
-		properitesData.setProperty("password", "xxx");
+		PROPERTIES_DATA = new Properties();
+		PROPERTIES_DATA.put("user", "root");
+		PROPERTIES_DATA.setProperty("password", "xxx");
 	}
 
 	public static void main(String[] args) {
@@ -29,7 +29,7 @@ public class OCPSqlInjection {
 		
 		String param = "Nicholas' or id IS NOT NULL or name ='Cestari";
 		
-		try (Connection connection = DriverManager.getConnection(jdbcUrl, properitesData)) {
+		try (Connection connection = DriverManager.getConnection(JDBC_URL, PROPERTIES_DATA)) {
 			System.out.println("Maybe SQL Injection: " + statement.resultsWithStatement(connection,param));
 			System.out.println("No SQL INJECTION!NOT EXPLOIT! " +preparedStatement.resultsWithPreparedStatement(connection, param));
 		} catch (SQLException e) {
