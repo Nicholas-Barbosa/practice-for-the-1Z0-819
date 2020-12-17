@@ -12,6 +12,8 @@ public class OCPSqlInjection {
 	 * e executado como um comando no programa. Este ataque pode ocorrer por falta
 	 * de seguranca, principalmente usando statement inves de prepared statement com
 	 * bind variables.
+	 * 
+	 * Exploit attack, e um ataque que leva vantagem de baixa seguranca
 	 */
 
 	private static final Properties PROPERTIES_DATA;
