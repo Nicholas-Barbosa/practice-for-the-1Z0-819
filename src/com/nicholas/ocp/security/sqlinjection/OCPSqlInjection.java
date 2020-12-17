@@ -20,7 +20,7 @@ public class OCPSqlInjection {
 	static {
 		properitesData = new Properties();
 		properitesData.put("user", "root");
-		properitesData.setProperty("password", "Vicinitech12");
+		properitesData.setProperty("password", "xxx");
 	}
 
 	public static void main(String[] args) {
