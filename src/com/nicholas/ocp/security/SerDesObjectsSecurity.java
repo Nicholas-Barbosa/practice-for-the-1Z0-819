@@ -80,7 +80,7 @@ public class SerDesObjectsSecurity implements Serializable {
 		this.country = (String) fields.get("country", null);
 	}
 
-	public Object readResolve() {
+	private Object readResolve() {
 		System.out.println("readResolve");
 		/*
 		 * Este metodo e chamado apos o readObject(), vc pode modificar o objeto
@@ -90,6 +90,12 @@ public class SerDesObjectsSecurity implements Serializable {
 		if (this.password == null) {
 			this.password = "Encrypted";
 		}
+		return this;
+	}
+
+	private Object writeReplace() {
+		System.out.println("Chamados antes da serializacao");
+
 		return this;
 	}
 
@@ -116,6 +122,17 @@ public class SerDesObjectsSecurity implements Serializable {
 			System.out.println(objectDes);
 
 		}
+		/*
+		 * void readObject(ObjectInputstream) -> Desserializa objeto usando GetField
+		 * 
+		 * Object readResolve() -> Permite modificar, substituir o objeto
+		 * desserializado. Este metodo e chamado depois da desserializacao(readObject)
+		 * 
+		 * void writeObject(ObjectOutputStream) -> Serializa usando PutField
+		 * 
+		 * Object writeReplace() -> Permite modificar o objeto a ser serializado.
+		 * Chamado antes da serializacao(writeObject)
+		 */
 	}
 
 }
